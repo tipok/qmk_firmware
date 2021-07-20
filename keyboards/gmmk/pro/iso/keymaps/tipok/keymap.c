@@ -22,7 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define KC_CSTL LCMD(LSFT(KC_5))  // Screen capture tool
 
 uint8_t current_layer;
-float   rgb_brightness = 1.0;
+
+enum tipoks_keycodes { TP_EFF1 = SAFE_RANGE, TP_EFF2 };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -46,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [1] = LAYOUT(
         _______, KC_BRMD, KC_BRMU, _______, _______,   RGB_TOG, RGB_MOD, RGB_RMOD, RGB_M_P,  _______, _______, _______, _______, KC_INS,            RESET,
-        _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, KC_DEL,            _______,
+        _______, _______, _______, _______, _______,   TP_EFF1, TP_EFF2, _______, _______,   _______, _______, _______, _______, KC_DEL,            _______,
         _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______,                    _______,
         _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______, _______, _______,           _______,
         _______, _______, _______, _______, _______,   _______, _______, _______, _______,   _______, _______, _______,          _______, KC_PGUP,  _______,
@@ -79,7 +80,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %b, time: %u, interrupt: %b, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif
-    return true;
+    switch (keycode) {
+        case TP_EFF1:
+            if (record->event.pressed) {
+                // Do something when pressed
+                rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE);
+            } else {
+                // Do something else when release
+            }
+            return false;
+        case TP_EFF2:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_SOLID_REACTIVE_MULTINEXUS);
+            }
+            return false;
+        default:
+            return true;  // Process all other keycodes normally
+    }
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
