@@ -57,6 +57,10 @@ enum layers current_layer;
 #define KC_LCKS LCTL(LCMD(KC_Q))  // Lock Screen
 #define KC_CSTL LCMD(LSFT(KC_5))  // Screen capture tool
 
+// Own shortcuts
+#define KC_MUVD LCMD(LSFT(LALT(KC_DOWN)))
+#define KC_MUVU LCMD(LSFT(LALT(KC_UP)))
+
 static uint8_t mac_keycode[4] = { KC_LOPT, KC_ROPT, KC_LCMD, KC_RCMD };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -144,16 +148,18 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif
     if (clockwise) {
         if (current_layer == 1) {
-            rgblight_increase_val();
+            SEND_STRING(SS_LCMD(SS_LSFT(SS_LALT(SS_TAP(X_UP)))));
         } else {
             tap_code(KC_VOLU);
         }
+        return false;
     } else {
         if (current_layer == 1) {
-            rgblight_decrease_val();
+            SEND_STRING(SS_LCMD(SS_LSFT(SS_LALT(SS_TAP(X_DOWN)))));
         } else {
             tap_code(KC_VOLD);
         }
+        return false;
     }
     return true;
 }
