@@ -16,11 +16,6 @@
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0x3434
-#define MANUFACTURER    Keychron
-#define PRODUCT         Keychron V3
-
 /* COL2ROW or ROW2COL */
 #define DIODE_DIRECTION ROW2COL
 
@@ -34,8 +29,8 @@
 
 /* Scan phase of led driver set as MSKPHASE_9CHANNEL(defined as 0x03 in CKLED2001.h) */
 #define PHASE_CHANNEL MSKPHASE_9CHANNEL
-#define CONSTANT_CURRENT_STEP \
-    { 0x9D, 0x9D, 0x45, 0x9D, 0x9D, 0x45, 0x9D, 0x9D, 0x45, 0x9D, 0x9D, 0x45 }
+#define CKLED2001_CURRENT_TUNE \
+    { 0x95, 0x95, 0x55, 0x95, 0x95, 0x55, 0x95, 0x95, 0x55, 0x95, 0x95, 0x55 }
 
 /* DIP switch */
 #define DIP_SWITCH_MATRIX_GRID  { {5, 4} }
@@ -47,9 +42,6 @@
 
 /* turn off effects when suspended */
 #define RGB_DISABLE_WHEN_USB_SUSPENDED
-
-/* We have 2KB EEPROM size on STM32L432 */
-#define DYNAMIC_KEYMAP_EEPROM_MAX_ADDR 2047
 
 /* EEPROM Driver Configuration */
 #define WEAR_LEVELING_LOGICAL_SIZE 2048

@@ -16,16 +16,12 @@
 
 #pragma once
 
-/* USB Device descriptor parameter */
-#define PRODUCT_ID 0x0112
-#define DEVICE_VER 0x0106
-
 /* RGB Matrix Configuration */
 #define DRIVER_1_LED_TOTAL 34
 #define DRIVER_2_LED_TOTAL 34
 #define DRIVER_LED_TOTAL (DRIVER_1_LED_TOTAL + DRIVER_2_LED_TOTAL)
 
-#define CONSTANT_CURRENT_STEP \
+#define CKLED2001_CURRENT_TUNE \
     { 0xC8, 0xC8, 0x60, 0xC8, 0xC8, 0x60, 0xC8, 0xC8, 0x60, 0xC8, 0xC8, 0x60 }
 
 /* Enable caps-lock LED */
